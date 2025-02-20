@@ -9,8 +9,10 @@ list_box = gui.Listbox(values=functions.get_employs(), key='employs', enable_eve
 
 edit_button = gui.Button("Edit")
 
+layout = [[label], [input_box, add_button], [list_box, edit_button]]
+
 window = gui.Window("My Employ App",
-                    layout=[[label], [input_box, add_button], [list_box, edit_button]],
+                    layout=layout,
                     font= ("Helvetica", 20))
 
 while True:

@@ -1,4 +1,4 @@
-from write import new_file
+
 
 print('Welcome to the Program of Employs')
 
