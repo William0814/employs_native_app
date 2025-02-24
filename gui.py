@@ -8,8 +8,13 @@ add_button = gui.Button("Add")
 list_box = gui.Listbox(values=functions.get_employs(), key='employs', enable_events=True, size=[45, 10])
 
 edit_button = gui.Button("Edit")
+delete_button = gui.Button('Delete')
+exit_button = gui.Button('Exit')
 
-layout = [[label], [input_box, add_button], [list_box, edit_button]]
+layout = [ [label], 
+           [input_box, add_button],
+           [list_box, edit_button, delete_button],
+           [exit_button]]
 
 window = gui.Window("My Employ App",
                     layout=layout,
@@ -27,17 +32,27 @@ while True:
             employs.append(new_employ.title())
             functions.write_employs(employs) 
             window['employs'].update(values=employs)
+            window['employ'].update(value='')
 
         case 'Edit':
             employ_to_edit = values['employs'][0]
             new_employ = values['employ']
-
             employs = functions.get_employs()
             index = employs.index(employ_to_edit)
             employs[index] = new_employ.title()
             functions.write_employs(employs)
             window['employs'].update(values=employs) 
 
+        case 'Delete':
+            employ_delete = values['employs'][0]
+            employs = functions.get_employs()
+            employs.remove(employ_delete)
+            functions.write_employs(employs)
+            window['employs'].update(values=employs)
+            window['employ'].update(value='')
+
+        case 'Exit':
+            break
         case 'employs':
             window['employ'].update(value=values['employs'][0])
 
