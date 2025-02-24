@@ -1,7 +1,10 @@
 import functions
 import FreeSimpleGUI as gui
+import time
 
 
+gui.theme("DarkBlue15")
+clock = gui.Text('', key='clock')
 label = gui.Text("Action type: ")
 input_box = gui.InputText(tooltip="Enter Employ", key="employ")
 add_button = gui.Button("Add")
@@ -11,7 +14,8 @@ edit_button = gui.Button("Edit")
 delete_button = gui.Button('Delete')
 exit_button = gui.Button('Exit')
 
-layout = [ [label], 
+layout = [ [clock],
+           [label], 
            [input_box, add_button],
            [list_box, edit_button, delete_button],
            [exit_button]]
@@ -21,36 +25,42 @@ window = gui.Window("My Employ App",
                     font= ("Helvetica", 20))
 
 while True:
-    event, values = window.read()
+    event, values = window.read(timeout=200)
+    window['clock'].update(value=time.strftime('%d-%m-%y %H:%M:%S:'))
     print(1, event)
     print(2, values)
     print(3, values['employs'])
     match event:
         case 'Add':
-            employs = functions.get_employs()
-            new_employ = values['employ'].strip() + "\n"
-            employs.append(new_employ.title())
+            employs = [e.strip() for e in functions.get_employs()]
+            new_employ = values['employ'].strip().title() 
+            employs.append(new_employ)
             functions.write_employs(employs) 
             window['employs'].update(values=employs)
             window['employ'].update(value='')
-
+            
         case 'Edit':
-            employ_to_edit = values['employs'][0]
-            new_employ = values['employ']
-            employs = functions.get_employs()
-            index = employs.index(employ_to_edit)
-            employs[index] = new_employ.title()
-            functions.write_employs(employs)
-            window['employs'].update(values=employs) 
+            try:
+                employ_to_edit = values['employs'][0]
+                new_employ = values['employ'].strip().title()
+                employs = [e.strip() for e in functions.get_employs()]
+                index = employs.index(employ_to_edit)
+                employs[index] = new_employ.title()
+                functions.write_employs(employs)
+                window['employs'].update(values=employs) 
+            except IndexError:
+                gui.popup('Please select an item first.', font=("Helvetica", 15), title='Error')
 
         case 'Delete':
-            employ_delete = values['employs'][0]
-            employs = functions.get_employs()
-            employs.remove(employ_delete)
-            functions.write_employs(employs)
-            window['employs'].update(values=employs)
-            window['employ'].update(value='')
-
+            try:
+                employ_delete = values['employs'][0]
+                employs = [e.strip() for e in functions.get_employs()]
+                employs.remove(employ_delete)
+                functions.write_employs(employs)
+                window['employs'].update(values=employs)
+                window['employ'].update(value='')
+            except IndexError:
+                gui.popup('Please select an item first.', font=("Helvetica", 15), title='Error')
         case 'Exit':
             break
         case 'employs':

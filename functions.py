@@ -7,7 +7,7 @@ def get_employs(filepath='Employs.txt'):
 def write_employs(employs_arg, filepath='Employs.txt'):
     """ Write the Employ items list in the text file"""
     with open(filepath, 'w') as file:
-        file.writelines(employs_arg)
+        file.writelines("\n".join(employs_arg).strip())
 
 def parse(feet_inches):
     """Calculate the feet and inches before print the result

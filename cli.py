@@ -1,5 +1,10 @@
 # from functions import get_employs, write_employs
 import functions
+import time
+
+time = time.strftime('%d-%m-%y %H:%M:%S:')
+print(time)
+
 
 
 print('--- Welcome to the Program of Employs ---')
