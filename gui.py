@@ -7,12 +7,12 @@ gui.theme("DarkBlue15")
 clock = gui.Text('', key='clock')
 label = gui.Text("Action type: ")
 input_box = gui.InputText(tooltip="Enter Employ", key="employ")
-add_button = gui.Button("Add")
+add_button = gui.Button(key='Add', size=10, image_source='add.png', tooltip='Add Employ')
 list_box = gui.Listbox(values=functions.get_employs(), key='employs', enable_events=True, size=[45, 10])
 
-edit_button = gui.Button("Edit")
-delete_button = gui.Button('Delete')
-exit_button = gui.Button('Exit')
+edit_button = gui.Button(key="Edit", size=10, image_source='edit.png', tooltip='Edit Employ')
+delete_button = gui.Button(key='Delete', size=10, image_source='delete.png', tooltip='Delete Employ')
+exit_button = gui.Button(key='Exit', size=15, image_source='exit.png', tooltip='Exit')
 
 layout = [ [clock],
            [label], 
@@ -71,4 +71,3 @@ while True:
 
     
 window.close()
-# deploys 
