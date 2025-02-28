@@ -1,8 +1,13 @@
 import functions
 import FreeSimpleGUI as gui
 import time
+import os
 
+if not os.path.exists('Employs.txt'):
+    with open('Employs.txt', 'w') as file:
+        file.write('')
 
+        
 gui.theme("DarkBlue15")
 clock = gui.Text('', key='clock')
 label = gui.Text("Action type: ")
